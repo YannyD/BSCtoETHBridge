@@ -30,12 +30,14 @@ contract BridgeBase {
         Step indexed step
     );
 
-    constructor(address _token) {
+    constructor(address _token, address _owner) {
         mockMtc = IMockMtc(_token);
         burnAddress = 0x000000000000000000000000000000000000dEaD;
-        owner = 0x7A46C781b593068d5e987b191e9c2f7413E22aEE;
+        owner = _owner;
     }
 
+
+// to burn, the bridge contract must be given permission to move tokens from message sender
     function burn(
         address to,
         uint256 amount,
@@ -59,6 +61,7 @@ contract BridgeBase {
         );
     }
 
+//subsequently, the owner must give the bridge contract permission to move tokens
     function mint(
         address from,
         address to,
